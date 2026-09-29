@@ -28,6 +28,12 @@ def require_text(value,field,max_length=2000):
 def normalize_severity(value):
     if value not in SEVERITIES: raise ValidationError("severity不在允许范围内")
     return value
+def require_choice(value,field,choices):
+    if value not in choices: raise ValidationError(f"{field}不在允许范围内")
+    return value
+def optional_text(value,field,max_length=2000,default=""):
+    if value is None: return default
+    return require_text(value,field,max_length)
 def require_number(value,field,minimum=0.0):
     if isinstance(value,bool): raise ValidationError(f"{field}必须是数字")
     try: number=float(value)
